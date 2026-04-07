@@ -1,0 +1,47 @@
+Issue Type,Summary,Description,Priority,Component,Environment
+Epic,Setup Project Infrastructure & Database,Establish the foundational NestJS and Angular repositories and base database schemas.,Highest,Infrastructure,Production
+Task,Init NestJS Backend,Generate NestJS project setup TypeORM connect to MySQL database and configure environment variables (.env).,Highest,Infrastructure,Backend
+Task,Init Angular Frontend,Generate Angular project install Angular Material configure proxy.conf.json for API requests.,Highest,Infrastructure,Frontend
+Task,Design Database Entities,Create TypeORM Entities for User Stock Order Portfolio Transaction WalletTransaction Watchlist StockPriceHistory.,Highest,Infrastructure,Backend
+Epic,User Authentication & Security,Implement secure JWT authentication OTP and 2FA.,Highest,Auth,Production
+Story,User Registration & OTP,As a user I want to register and verify my email using an OTP code sent via email.,Highest,Auth,Fullstack
+Story,User Login & JWT,As a user I want to log in securely and receive an access token.,Highest,Auth,Fullstack
+Story,Setup 2FA (Google Authenticator),As a user I want to setup two-factor authentication for added security.,High,Auth,Fullstack
+Story,Forgot/Reset Password,As a user I want to request a password reset via email OTP.,High,Auth,Fullstack
+Epic,Wallet and Payment Processing,Manage user balance deposits via VNPay and secure withdrawals.,Highest,Wallet,Production
+Story,Deposit via VNPay,As a user I want to deposit money into my trading account securely using VNPay sandbox.,Highest,Wallet,Fullstack
+Story,Withdrawal & OTP Verification,As a user I want to withdraw my funds and verify the transaction with an OTP.,High,Wallet,Fullstack
+Story,Wallet Transaction History,As a user I want to view my deposit and withdrawal history.,Medium,Wallet,Frontend
+Epic,Stock Market Data & Watchlist,Allow users to view market data and track stocks.,High,Market,Production
+Story,Stock Listing & Pagination,As a user I want to view a paginated listed of all available stocks with their current prices and change percentage.,Highest,Market,Fullstack
+Story,Stock Detail & TradingView Chart,As a user I want to view candlestick charts for a specific stock to analyze its history.,Highest,Market,Fullstack
+Story,Manage Watchlist,As a user I want to add or remove stocks from my personal watchlist.,Medium,Market,Fullstack
+Epic,Order Management System (OMS),System to place validate and manage trading orders.,Highest,Trading,Production
+Story,Place Market Orders,As a user I want to place BUY/SELL MARKET orders to matched immediately.,Highest,Trading,Fullstack
+Story,Place Limit Orders,As a user I want to place BUY/SELL LIMIT orders to match at my desired price.,Highest,Trading,Fullstack
+Story,Cancel/Modify Pending Orders,As a user I want to cancel or adjust price/quantity of my pending limit orders.,High,Trading,Fullstack
+Story,Order History & Status Tracking,As a user I want to see my order history and their statuses (Pending Partial Filled).,High,Trading,Fullstack
+Epic,Matching Engine & Settlement,Core engine matching bids/asks and settling balances/portfolios.,Highest,Engine,Backend
+Task,Price-Time Priority Algorithm,Implement the core matching algorithm prioritizing best prices and earliest times.,Highest,Engine,Backend
+Task,Post-Trade Processor,Logic to deduct balances add to portfolios and create Transaction history after a match.,Highest,Engine,Backend
+Task,Matching Engine Scheduler,Create a cron job / interval to repeatedly run the matching engine for all stocks.,Highest,Engine,Backend
+Task,Order Book Calculation,Aggregate pending BUY and SELL orders into price levels (Bids/Asks) for the Orderbook.,Highest,Engine,Backend
+Epic,Portfolio Management,Tracking user investments and PnL.,High,Portfolio,Production
+Story,View Active Portfolio,As a user I want to view my owned stocks average buy prices and total locked quantity.,Highest,Portfolio,Fullstack
+Story,Calculate Profit/Loss (PnL),As a user I want to see my real-time profit and loss for each stock in my portfolio.,High,Portfolio,Fullstack
+Story,Transaction History,As a user I want to view my complete list of filled trades.,Medium,Portfolio,Fullstack
+Epic,Realtime Updates (WebSocket),Live data pushing without polling.,Medium,Realtime,Production
+Task,WebSocket Gateway Setup,Initialize Socket.io or native WebSockets in NestJS.,High,Realtime,Backend
+Task,Broadcast Stock Prices,Push live price ticks to all subscribed frontend clients after a match.,High,Realtime,Fullstack
+Task,Broadcast Order Book,Push live updates to the Bids/Asks order book view.,Medium,Realtime,Fullstack
+Task,User Order Notifications,Send a private notification to a user when their order is filled.,Medium,Realtime,Fullstack
+Epic,Trading Bots & Liquidity,Automated bots to keep the simulated market moving.,Low,Bots,Backend
+Task,Bot Account Seeder,Create mock user accounts with high balances serving as liquidity providers.,Medium,Bots,Backend
+Task,Random Trade Generator,Script to randomly place plausible buy/sell orders around the current market price.,Low,Bots,Backend
+Epic,Admin Dashboard,Tools for administrators to manage the system.,Medium,Admin,Production
+Story,System Statistics Dashboard,As an admin I want to view total users total trading volume and fees collected.,Medium,Admin,Fullstack
+Story,User Management,As an admin I want to view lock or unlock user accounts.,Medium,Admin,Fullstack
+Story,Stock & Order Management,As an admin I want to halt trading for specific stocks or forcefully cancel orders.,Low,Admin,Fullstack
+Epic,Advanced Conditional Orders,Stop Loss Take Profit Trailing Orders.,Low,Trading,Fullstack
+Story,Stop Loss & Take Profit Orders,As a user I want to set a predefined exit price to limit my losses or secure profits.,Low,Trading,Fullstack
+Story,Trailing Stop Orders,As a user I want to set a trailing price that follows the market up to optimize profits.,Low,Trading,Fullstack
