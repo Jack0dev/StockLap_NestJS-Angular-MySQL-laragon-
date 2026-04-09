@@ -10,7 +10,10 @@ import { OrdersModule } from './orders/orders.module';
 import { WalletModule } from './wallet/wallet.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
 import { AdminModule } from './admin/admin.module';
-
+import { ScheduleModule } from '@nestjs/schedule';
+import { BotsModule } from './bots/bots.module';
+import { WatchlistModule } from './watchlist/watchlist.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -21,8 +24,12 @@ import { AdminModule } from './admin/admin.module';
     WalletModule,
     PortfolioModule,
     AdminModule,
+    ScheduleModule.forRoot(),
+    BotsModule,
+    WatchlistModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

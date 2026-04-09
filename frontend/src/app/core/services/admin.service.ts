@@ -77,7 +77,7 @@ interface ApiResponse<T> {
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private http = inject(HttpClient);
-  private baseUrl = '/api/admin';
+  private baseUrl = 'http://localhost:3000/api/admin';
 
   getStatistics(): Observable<AdminStatistics> {
     return this.http.get<ApiResponse<AdminStatistics>>(`${this.baseUrl}/statistics`)

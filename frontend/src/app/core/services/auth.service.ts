@@ -1,4 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
 export interface AuthUser {
   id: number;
@@ -7,8 +9,19 @@ export interface AuthUser {
   role: string;
 }
 
+export interface AuthResponse {
+  accessToken: string;
+  user: AuthUser;
+  requires2fa?: boolean;
+  tempToken?: string;
+  message?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private http = inject(HttpClient);
+  private baseUrl = 'http://localhost:3000/api/auth';
+  
   private currentUser = signal<AuthUser | null>(null);
   private token = signal<string | null>(null);
 
@@ -17,7 +30,6 @@ export class AuthService {
   readonly user = computed(() => this.currentUser());
 
   constructor() {
-    // Load from localStorage on init
     const storedToken = localStorage.getItem('stocklab_token');
     const storedUser = localStorage.getItem('stocklab_user');
     if (storedToken && storedUser) {
@@ -30,21 +42,53 @@ export class AuthService {
     return this.token();
   }
 
-  /**
-   * For development: auto-login as admin without real auth flow.
-   * Will be replaced with real JWT auth later.
-   */
-  devLoginAsAdmin(): void {
-    const mockAdmin: AuthUser = {
-      id: 1,
-      email: 'admin@stocklab.vn',
-      fullName: 'Admin StockLab',
-      role: 'ADMIN',
-    };
-    this.token.set('dev-admin-token');
-    this.currentUser.set(mockAdmin);
-    localStorage.setItem('stocklab_token', 'dev-admin-token');
-    localStorage.setItem('stocklab_user', JSON.stringify(mockAdmin));
+  register(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, data);
+  }
+
+  verifyOtp(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/verify-otp`, data);
+  }
+
+  login(data: any): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/login`, data).pipe(
+      tap((res) => {
+        if (!res.requires2fa && res.accessToken) {
+          this.setSession(res);
+        }
+      })
+    );
+  }
+
+  verify2Fa(tempToken: string, token: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/verify-2fa`, { tempToken, token }).pipe(
+      tap((res) => {
+        this.setSession(res);
+      })
+    );
+  }
+  
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/reset-password`, data);
+  }
+
+  generate2FaSecret(): Observable<{ qrCodeUrl: string }> {
+    return this.http.get<{ qrCodeUrl: string }>(`${this.baseUrl}/2fa/generate`);
+  }
+
+  turnOn2Fa(token: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/2fa/turn-on`, { token });
+  }
+
+  private setSession(res: AuthResponse) {
+    this.token.set(res.accessToken);
+    this.currentUser.set(res.user);
+    localStorage.setItem('stocklab_token', res.accessToken);
+    localStorage.setItem('stocklab_user', JSON.stringify(res.user));
   }
 
   logout(): void {
