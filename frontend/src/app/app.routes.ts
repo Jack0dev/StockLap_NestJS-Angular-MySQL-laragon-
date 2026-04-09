@@ -53,6 +53,14 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/reset-password/reset-password.component')
   },
   {
+    path: 'portfolio',
+    loadComponent: () => import('./features/portfolio/active-portfolio/active-portfolio.component').then(m => m.ActivePortfolioComponent)
+  },
+  {
+    path: 'portfolio/transactions',
+    loadComponent: () => import('./features/portfolio/transaction-history/transaction-history.component').then(m => m.TransactionHistoryComponent)
+  },
+  {
     path: '',
     redirectTo: 'auth/login',
     pathMatch: 'full'

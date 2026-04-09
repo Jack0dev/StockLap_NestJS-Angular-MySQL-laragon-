@@ -1,0 +1,49 @@
+.portfolio-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.table-card {
+  background: rgba(255, 255, 255, 0.05); /* Glassmorphism */
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  margin-top: 16px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.data-table th, .data-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.text-success { color: #00e676; font-weight: bold; }
+.text-danger { color: #ff1744; font-weight: bold; }
+.text-center { text-align: center; color: #aaa; }
+
+.badge-buy {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.badge-sell {
+  background: rgba(255, 23, 68, 0.15);
+  color: #ff1744;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
