@@ -1,0 +1,53 @@
+/* Using the same base styles as UserManagement component */
+@import '../user-management/user-management.component.css';
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover { color: #cbd5e1; }
+.tab-btn.active {
+  color: #818cf8;
+  border-bottom-color: #6366f1;
+}
+
+.filters-bar {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.5);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.filters-bar select {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #e2e8f0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.status-filled { background: rgba(16, 185, 129, 0.1); color: #34d399; }
+.status-pending { background: rgba(245, 158, 11, 0.1); color: #fbbf24; }
+.status-partial { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
+.status-cancelled { background: rgba(100, 116, 139, 0.2); color: #94a3b8; }
+
+.text-primary { color: #818cf8; }
+.text-danger { color: #f87171; }
+.text-warning { color: #fbbf24; }
+.ml-auto { margin-left: auto; }

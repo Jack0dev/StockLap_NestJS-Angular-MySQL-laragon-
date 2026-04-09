@@ -1,0 +1,136 @@
+/* Shared variables & base classes (Will put these in app.css or shared later, keeping here for now) */
+.page-container { max-width: 1200px; margin: 0 auto; }
+.page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.page-title { font-size: 1.5rem; font-weight: 700; color: #f1f5f9; margin: 0; }
+.page-subtitle { font-size: 0.875rem; color: #64748b; margin: 4px 0 0; }
+
+.card {
+  background: #0f1629;
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 8px;
+  padding: 4px 4px 4px 12px;
+  color: #94a3b8;
+}
+
+.search-box input {
+  background: transparent;
+  border: none;
+  color: #f1f5f9;
+  padding: 8px 12px;
+  outline: none;
+  width: 250px;
+  font-family: inherit;
+}
+
+.search-btn {
+  background: rgba(99, 102, 241, 0.1);
+  color: #818cf8;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.search-btn:hover { background: rgba(99, 102, 241, 0.2); }
+
+/* Table */
+.table-container { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; text-align: left; }
+.data-table th {
+  background: rgba(15, 23, 42, 0.8);
+  padding: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+}
+.data-table td {
+  padding: 16px;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.05);
+  font-size: 0.875rem;
+  color: #cbd5e1;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: rgba(99, 102, 241, 0.03); }
+
+/* Value styling */
+.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+.font-medium { font-weight: 500; }
+.text-muted { color: #64748b; }
+.text-right { text-align: right; }
+.text-success { color: #34d399; }
+
+.user-info-cell { display: flex; flex-direction: column; }
+.user-name { font-weight: 600; color: #f1f5f9; }
+.user-email { font-size: 0.75rem; color: #64748b; }
+
+.badge {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: rgba(100, 116, 139, 0.1);
+  color: #94a3b8;
+}
+.badge--admin { background: rgba(139, 92, 246, 0.1); color: #a78bfa; }
+.badge--success { background: rgba(16, 185, 129, 0.1); color: #34d399; }
+.badge--danger { background: rgba(239, 68, 68, 0.1); color: #f87171; }
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.btn-lock { background: rgba(239, 68, 68, 0.1); color: #f87171; }
+.btn-lock:hover { background: rgba(239, 68, 68, 0.2); }
+.btn-unlock { background: rgba(16, 185, 129, 0.1); color: #34d399; }
+.btn-unlock:hover { background: rgba(16, 185, 129, 0.2); }
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-top: 1px solid rgba(99, 102, 241, 0.1);
+  background: rgba(15, 23, 42, 0.5);
+}
+.pagination-info { font-size: 0.875rem; color: #64748b; }
+.pagination-controls { display: flex; gap: 8px; }
+.pagination-controls button {
+  background: rgba(99, 102, 241, 0.1); color: #a5b4fc;
+  border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer;
+}
+.pagination-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+.pagination-controls button:not(:disabled):hover { background: rgba(99, 102, 241, 0.2); }
+
+.empty-state { padding: 48px; text-align: center; color: #64748b; }
+.error { color: #f87171; }
+.spinner {
+  width: 24px; height: 24px; margin: 0 auto;
+  border: 2px solid rgba(99, 102, 241, 0.2);
+  border-top-color: #6366f1; border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

@@ -1,0 +1,148 @@
+<div class="dashboard-page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-subtitle">Tổng quan hệ thống StockLab</p>
+    </div>
+    <button class="refresh-btn" (click)="loadStatistics()" id="refresh-stats-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="23,4 23,10 17,10"/>
+        <polyline points="1,20 1,14 7,14"/>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+      </svg>
+      Làm mới
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Đang tải dữ liệu...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+      </svg>
+      <p>{{ error() }}</p>
+      <button class="retry-btn" (click)="loadStatistics()">Thử lại</button>
+    </div>
+  } @else if (stats()) {
+    <!-- Stats Cards Grid -->
+    <div class="stats-grid">
+      <!-- Total Users -->
+      <div class="stat-card stat-card--users" id="stat-total-users">
+        <div class="stat-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__value">{{ formatNumber(stats()!.totalUsers) }}</span>
+          <span class="stat-card__label">Tổng người dùng</span>
+        </div>
+        <div class="stat-card__detail">
+          <span class="detail-item detail-item--success">
+            <span class="dot dot--success"></span>
+            {{ stats()!.activeUsers }} active
+          </span>
+          <span class="detail-item detail-item--danger">
+            <span class="dot dot--danger"></span>
+            {{ stats()!.lockedUsers }} locked
+          </span>
+        </div>
+      </div>
+
+      <!-- Trading Volume -->
+      <div class="stat-card stat-card--volume" id="stat-trading-volume">
+        <div class="stat-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
+            <polyline points="16,7 22,7 22,13"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__value">{{ formatCurrency(stats()!.totalTradingVolume) }}</span>
+          <span class="stat-card__label">Tổng khối lượng GD</span>
+        </div>
+        <div class="stat-card__detail">
+          <span class="detail-item">{{ stats()!.ordersToday }} lệnh hôm nay</span>
+        </div>
+      </div>
+
+      <!-- Fees Collected -->
+      <div class="stat-card stat-card--fees" id="stat-fees">
+        <div class="stat-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__value">{{ formatCurrency(stats()!.totalFeesCollected) }}</span>
+          <span class="stat-card__label">Tổng phí thu được</span>
+        </div>
+        <div class="stat-card__detail">
+          <span class="detail-item">Phí 0.15% / giao dịch</span>
+        </div>
+      </div>
+
+      <!-- Stocks -->
+      <div class="stat-card stat-card--stocks" id="stat-stocks">
+        <div class="stat-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__value">{{ formatNumber(stats()!.totalStocks) }}</span>
+          <span class="stat-card__label">Tổng cổ phiếu</span>
+        </div>
+        <div class="stat-card__detail">
+          <span class="detail-item detail-item--success">
+            <span class="dot dot--success"></span>
+            {{ stats()!.activeStocks }} đang GD
+          </span>
+          <span class="detail-item detail-item--warning">
+            <span class="dot dot--warning"></span>
+            {{ stats()!.haltedStocks }} tạm ngừng
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section">
+      <h2 class="section-title">Truy cập nhanh</h2>
+      <div class="quick-actions">
+        <a routerLink="/admin/users" class="action-card" id="quick-action-users">
+          <div class="action-icon action-icon--users">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+            </svg>
+          </div>
+          <span class="action-label">Quản lý người dùng</span>
+          <span class="action-desc">Lock/Unlock tài khoản</span>
+        </a>
+        <a routerLink="/admin/stocks-orders" class="action-card" id="quick-action-stocks">
+          <div class="action-icon action-icon--stocks">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
+              <polyline points="16,7 22,7 22,13"/>
+            </svg>
+          </div>
+          <span class="action-label">Cổ phiếu & Lệnh</span>
+          <span class="action-desc">Halt/Resume, Cancel lệnh</span>
+        </a>
+      </div>
+    </div>
+  }
+</div>
